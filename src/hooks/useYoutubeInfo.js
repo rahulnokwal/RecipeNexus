@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 const useYoutubeInfo = (recipe) => {
   const [recipeVideo, setRecipeVideo] = useState();
   const [errorVideo, setErrorVideo] = useState(null);
   useEffect(() => {
-    fetchRecipeData();
     const fetchRecipeVideo = async () => {
       try {
         const response = await fetch(
