@@ -2,7 +2,7 @@ import React from "react";
 import ReciNexusLogo from "./ReciNexusLogo";
 const Header = () => {
   return (
-    <div className="absolute top-0 left-0 w-full bg-[#121417] px-4 border-b border-emerald-500 flex justify-between items-center">
+    <div className="absolute top-0 left-0 h-15 w-full bg-[#121417] px-4 border-b border-emerald-500 flex justify-between items-center">
       <div className="flex items-center gap-3 group cursor-pointer py-1.5">
         <div className="text-emerald-500 transition-transform group-hover:scale-110">
           <ReciNexusLogo size={36} />
