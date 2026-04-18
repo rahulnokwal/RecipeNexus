@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Search } from "lucide-react";
 import useAppContext from "../../context/useRecipeContext";
 const InputSearch = () => {
-  const { setRecipeSearch } = useAppContext();
+  const { recipeSearch, setRecipeSearch } = useAppContext();
   const [inputValue, setInputValue] = useState("");
   function searchRecipe() {
     const recipe = inputValue.trim();
+    console.log(recipe);
     if (recipe === "") return;
+    console.log(recipeSearch);
     setRecipeSearch(recipe);
+    console.log(recipeSearch);
     setInputValue("");
   }
   return (

@@ -1,24 +1,42 @@
-import React, { useEffect, useState } from "react";
-import { RECIPE_API_KEY, VIDEO_API_KEY } from "../../config.js";
+import { useEffect, useState } from "react";
+import { RECIPE_API_KEY } from "../../config.js";
 
 const useRecipeInfo = (recipe) => {
-  const [recipeInfo, setRecipeInfo] = useState();
-  const [errorInfo, setErrorInfo] = useState(null);
+  const [recipeInfo, setRecipeInfo] = useState([]);
+  const [errorInfo, setErrorInfo] = useState({});
 
   useEffect(() => {
     const fetchRecipeData = async () => {
       try {
-        const response = await fetch(
-          `https://api.spoonacular.com/recipes/complexSearch?query=${recipe}&number=10&addRecipeInformation=true&apiKey=${RECIPE_API_KEY}`,
-        );
+        setErrorInfo(null);
+        let fetch_url = `https://api.spoonacular.com/recipes/complexSearch?query=${recipe}&number=8&instructionsRequired=true&addRecipeInformation=true&apiKey=${RECIPE_API_KEY}`;
+
+        if (recipe === "") {
+          fetch_url = `https://api.spoonacular.com/recipes/random?number=10&tags=vegetarian&apiKey=${RECIPE_API_KEY}`;
+        }
+
+        const response = await fetch(fetch_url);
         const data = await response.json();
-        setRecipeInfo(data.results);
+
+        if (!response.ok) {
+          throw new Error(
+            data.message || "Something went wrong fetching the recipes.",
+          );
+        }
+
+        if (recipe === "") {
+          setRecipeInfo(data.recipes);
+        } else {
+          setRecipeInfo(data.results);
+        }
       } catch (error) {
-        setErrorInfo(error.message);
+        setErrorInfo(error);
       }
     };
+
     fetchRecipeData();
   }, [recipe]);
+
   return { recipeInfo, errorInfo };
 };
 

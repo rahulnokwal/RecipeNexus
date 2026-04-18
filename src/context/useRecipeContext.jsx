@@ -3,7 +3,7 @@ import React, { createContext, useContext } from "react";
 export const appContext = createContext({
   recipeSearch: "",
   setRecipeSearch: () => {},
-  clickedRecipe: "",
+  clickedRecipe: {},
   setClickedRecipe: () => {},
   recipeInfo: [],
   errorInfo: {},
