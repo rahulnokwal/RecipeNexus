@@ -1,6 +1,6 @@
 import React from "react";
 import ReciNexusLogo from "./ReciNexusLogo";
-import InputSearch from "./InputSearch";
+import InputSearch from "../Main/InputSearch";
 const Header = () => {
   return (
     <div className="absolute top-0 left-0 w-full">
@@ -22,7 +22,6 @@ const Header = () => {
           />
         </div>
       </div>
-      <InputSearch />
     </div>
   );
 };

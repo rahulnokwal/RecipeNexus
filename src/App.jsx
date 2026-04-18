@@ -1,22 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./component/Header/Header";
-import HomePage from "./component/Main/HomePage";
 import { ContextProvider } from "./context/useRecipeContext";
 import useRecipeInfo from "./hooks/useRecipeInfo";
 import useYoutubeInfo from "./hooks/useYoutubeInfo";
 import Navbar from "./component/Navbar/Navbar";
-// import { recipe, yt } from "../data.js";
+import { recipe, yt } from "../data.js";
+import { Outlet } from "react-router-dom";
 const App = () => {
   const [recipeSearch, setRecipeSearch] = useState("");
   const [clickedRecipe, setClickedRecipe] = useState(null);
-  const { recipeInfo, errorInfo } = useRecipeInfo(recipeSearch);
-  const { recipeVideo, errorVideo } = useYoutubeInfo(clickedRecipe);
+  // const { recipeInfo, errorInfo } = useRecipeInfo(recipeSearch);
+  // const { recipeVideo, errorVideo } = useYoutubeInfo(clickedRecipe);
+
+  const [likedRecipe, setLikedRecipe] = useState(() => {
+    let recipe = localStorage.getItem("likedRecipes");
+    return recipe ? JSON.parse(recipe) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("likedRecipes", JSON.stringify(likedRecipe));
+  }, [likedRecipe]);
 
   // temperary data for UI
-  // let { recipeInfo, errorInfo } = useRecipeInfo(recipeSearch);
-  // let { recipeVideo, errorVideo } = useYoutubeInfo(clickedRecipe);
-  // recipeInfo = recipe;
-  // recipeVideo = yt;
+  let recipeInfo = recipe;
+  let recipeVideo = yt;
+  let errorInfo, errorVideo;
 
   return (
     <ContextProvider
@@ -29,12 +37,14 @@ const App = () => {
         errorInfo,
         recipeVideo,
         errorVideo,
+        likedRecipe,
+        setLikedRecipe,
       }}
     >
       <div className="w-screen h-screen bg-slate-800 flex justify-center py-2">
         <div className="w-sm h-full rounded-lg  relative bg-[#121417]">
           <Header />
-          <HomePage />
+          <Outlet />
           <Navbar />
         </div>
       </div>

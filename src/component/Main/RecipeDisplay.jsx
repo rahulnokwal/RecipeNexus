@@ -3,19 +3,33 @@ import { ArrowLeft, Heart } from "lucide-react";
 import Title from "./Title.jsx";
 import Video from "./Video.jsx";
 import useAppContext from "../../context/useRecipeContext.jsx";
-
+import { useNavigate } from "react-router-dom";
 const RecipeDisplay = () => {
-  const { clickedRecipe, setClickedRecipe } = useAppContext();
+  const navigate = useNavigate();
+  const { clickedRecipe, setClickedRecipe, likedRecipe, setLikedRecipe } =
+    useAppContext();
+
+  const addLikedRecipe = () => {
+    const isLiked = likedRecipe.some((item) => item.id === clickedRecipe.id);
+    if (isLiked) return;
+    setLikedRecipe((prev) => [...prev, clickedRecipe]);
+  };
+
   return (
     clickedRecipe && (
       <div className="w-full text-black relative">
         <div className="w-full rounded-lg relative">
           <div className="w-full absolute top-4 left-0 flex items-center justify-between px-6 ">
             <div className="bg-white/80 h-10 w-10 rounded-xl flex justify-center items-center">
-              <ArrowLeft onClick={() => setClickedRecipe(null)} />
+              <ArrowLeft
+                onClick={() => {
+                  setClickedRecipe(null);
+                  navigate(-1);
+                }}
+              />
             </div>
-            <div className="bg-white/80 h-10 w-10 rounded-xl flex justify-center items-center text-red-600">
-              <Heart />
+            <div className="bg-white/80 h-10 w-10 rounded-xl flex justify-center items-center text-red-600  hover:bg-red-500 hover:text-white transition-all duration-300">
+              <Heart onClick={addLikedRecipe} />
             </div>
           </div>
           <img

@@ -1,16 +1,13 @@
 import React from "react";
 import useAppContext from "../../context/useRecipeContext.jsx";
 import ErrorState from "./ErrorState.jsx";
+import { useNavigate } from "react-router-dom";
 const SearchDisplay = () => {
-  const {
-    recipeSearch,
-    recipeInfo,
-    errorInfo,
-    clickedRecipe,
-    setClickedRecipe,
-  } = useAppContext();
+  const navigate = useNavigate();
+  const { recipeSearch, recipeInfo, errorInfo, setClickedRecipe } =
+    useAppContext();
 
-  if (errorInfo) {
+  if (recipeSearch && errorInfo) {
     return (
       <div className="p-4 w-full h-full flex items-center justify-center">
         <ErrorState
@@ -32,14 +29,19 @@ const SearchDisplay = () => {
     );
   }
   return (
-    <div className="flex flex-wrap gap-2.5 justify-center">
-      {recipeSearch &&
-        !clickedRecipe &&
-        recipeInfo.map((recipe) => (
+    <>
+      <p className="text-white text-2xl font-medium capitalize my-2">
+        Your recipe with {recipeSearch}
+      </p>
+      <div className="flex flex-wrap gap-2.5 justify-center">
+        {recipeInfo.map((recipe) => (
           <div
             key={recipe.id}
             className="h-42 w-40 rounded-lg"
-            onClick={() => setClickedRecipe(recipe)}
+            onClick={() => {
+              setClickedRecipe(recipe);
+              navigate("../recipe");
+            }}
           >
             <img src={recipe.image} className="h-full w-full rounded-lg" />
             <div className="bg-white/40 h-full w-full rounded-lg -translate-y-full flex items-center justify-center backdrop-blur-xs px-2">
@@ -49,7 +51,8 @@ const SearchDisplay = () => {
             </div>
           </div>
         ))}
-    </div>
+      </div>
+    </>
   );
 };
 
