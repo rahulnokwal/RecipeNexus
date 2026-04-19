@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { RECIPE_API_KEY } from "../../config.js";
+import { VITE_RECIPE_API_KEY } from "../../config.js";
 
 const useRecipeInfo = (recipe) => {
   const [recipeInfo, setRecipeInfo] = useState([]);
@@ -19,10 +19,10 @@ const useRecipeInfo = (recipe) => {
           return;
         }
 
-        let fetch_url = `https://api.spoonacular.com/recipes/complexSearch?query=${recipe}&number=8&instructionsRequired=true&addRecipeInformation=true&apiKey=${RECIPE_API_KEY}`;
+        let fetch_url = `https://api.spoonacular.com/recipes/complexSearch?query=${recipe}&number=8&instructionsRequired=true&addRecipeInformation=true&apiKey=${VITE_RECIPE_API_KEY}`;
 
         if (recipe === "") {
-          fetch_url = `https://api.spoonacular.com/recipes/random?number=10&tags=vegetarian&apiKey=${RECIPE_API_KEY}`;
+          fetch_url = `https://api.spoonacular.com/recipes/random?number=10&tags=vegetarian&apiKey=${VITE_RECIPE_API_KEY}`;
         }
 
         const response = await fetch(fetch_url);
