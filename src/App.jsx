@@ -4,7 +4,7 @@ import { ContextProvider } from "./context/useRecipeContext";
 import useRecipeInfo from "./hooks/useRecipeInfo";
 import useYoutubeInfo from "./hooks/useYoutubeInfo";
 import Navbar from "./component/Navbar/Navbar";
-import { recipe, yt } from "../data.js";
+
 import { Outlet } from "react-router-dom";
 const App = () => {
   const [recipeSearch, setRecipeSearch] = useState(() => {
@@ -35,11 +35,6 @@ const App = () => {
   useEffect(() => {
     localStorage.setItem("likedRecipes", JSON.stringify(likedRecipe));
   }, [likedRecipe]);
-
-  // temporary data for UI
-  // let recipeInfo = recipe;
-  // let recipeVideo = yt;
-  // let errorInfo, errorVideo;
 
   return (
     <ContextProvider

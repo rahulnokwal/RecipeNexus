@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import HomePage from "./component/Main/HomePage.jsx";
 import SearchDisplay from "./component/Main/SearchDisplay.jsx";
-import RecipeDisplay from "./component/Main/RecipeDisplay.jsx";
+import RecipeDisplay from "./component/RecipePage/RecipeDisplay.jsx";
 import OtherPage from "./component/Main/OtherPage.jsx";
 import LikedDisplay from "./component/Main/LikedDisplay.jsx";
 

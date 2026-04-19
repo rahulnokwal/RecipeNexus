@@ -4,17 +4,23 @@ import useAppContext from "../../context/useRecipeContext";
 import { useNavigate } from "react-router-dom";
 const InputSearch = () => {
   const navigate = useNavigate();
-  const { recipeSearch, setRecipeSearch } = useAppContext();
+  const { setRecipeSearch } = useAppContext();
   const [inputValue, setInputValue] = useState("");
-  function searchRecipe() {
+
+  function searchRecipe(e) {
+    e.preventDefault();
     const recipe = inputValue.trim();
+    console.log(recipe);
     if (recipe === "") return;
     setRecipeSearch(recipe);
     setInputValue("");
     navigate("display/search");
   }
   return (
-    <div className="w-[calc(100%-32px)] absolute top-15 left-0 flex justify-center items-center  outline-none shadow-sm shadow-[#2E3339] bg-green-900 rounded-lg mt-4 mx-4">
+    <form
+      className="w-[calc(100%-32px)] absolute top-15 left-0 flex justify-center items-center  outline-none shadow-sm shadow-[#2E3339] bg-green-900 rounded-lg mt-4 mx-4"
+      onSubmit={searchRecipe}
+    >
       <input
         type="text"
         placeholder="Search by Ingredients"
@@ -24,12 +30,13 @@ const InputSearch = () => {
           setInputValue(e.target.value);
         }}
       />
-      <Search
-        size={40}
+      <button
+        type="submit"
         className="bg-emerald-500 text-white p-1 rounded-r-lg hover:bg-emerald-400"
-        onClick={searchRecipe}
-      />
-    </div>
+      >
+        <Search size={32} />
+      </button>
+    </form>
   );
 };
 
