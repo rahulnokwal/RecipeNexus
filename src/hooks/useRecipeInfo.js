@@ -4,11 +4,13 @@ import { RECIPE_API_KEY } from "../../config.js";
 const useRecipeInfo = (recipe) => {
   const [recipeInfo, setRecipeInfo] = useState([]);
   const [errorInfo, setErrorInfo] = useState({});
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchRecipeData = async () => {
+      setErrorInfo(null);
+      setLoading(true);
       try {
-        setErrorInfo(null);
         let fetch_url = `https://api.spoonacular.com/recipes/complexSearch?query=${recipe}&number=8&instructionsRequired=true&addRecipeInformation=true&apiKey=${RECIPE_API_KEY}`;
 
         if (recipe === "") {
@@ -31,13 +33,14 @@ const useRecipeInfo = (recipe) => {
         }
       } catch (error) {
         setErrorInfo(error);
+      } finally {
+        setLoading(false);
       }
     };
-
     fetchRecipeData();
   }, [recipe]);
 
-  return { recipeInfo, errorInfo };
+  return { recipeInfo, errorInfo, loading };
 };
 
 export default useRecipeInfo;

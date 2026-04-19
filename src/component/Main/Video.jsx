@@ -1,6 +1,6 @@
 import React from "react";
 import useAppContext from "../../context/useRecipeContext.jsx";
-import ErrorState from "./ErrorState.jsx";
+import ErrorState from "../ErrorPage/ErrorState.jsx";
 const Video = () => {
   const { recipeVideo, errorVideo } = useAppContext();
   if (errorVideo) {

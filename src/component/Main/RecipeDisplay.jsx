@@ -1,4 +1,3 @@
-import React from "react";
 import { ArrowLeft, Heart } from "lucide-react";
 import Title from "./Title.jsx";
 import Video from "./Video.jsx";
@@ -6,13 +5,19 @@ import useAppContext from "../../context/useRecipeContext.jsx";
 import { useNavigate } from "react-router-dom";
 const RecipeDisplay = () => {
   const navigate = useNavigate();
-  const { clickedRecipe, setClickedRecipe, likedRecipe, setLikedRecipe } =
-    useAppContext();
+  const { clickedRecipe, likedRecipe, setLikedRecipe } = useAppContext();
 
   const addLikedRecipe = () => {
     const isLiked = likedRecipe.some((item) => item.id === clickedRecipe.id);
     if (isLiked) return;
     setLikedRecipe((prev) => [...prev, clickedRecipe]);
+  };
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate("/");
+    }
   };
 
   return (
@@ -21,12 +26,7 @@ const RecipeDisplay = () => {
         <div className="w-full rounded-lg relative">
           <div className="w-full absolute top-4 left-0 flex items-center justify-between px-6 ">
             <div className="bg-white/80 h-10 w-10 rounded-xl flex justify-center items-center">
-              <ArrowLeft
-                onClick={() => {
-                  setClickedRecipe(null);
-                  navigate(-1);
-                }}
-              />
+              <ArrowLeft onClick={handleBack} />
             </div>
             <div className="bg-white/80 h-10 w-10 rounded-xl flex justify-center items-center text-red-600  hover:bg-red-500 hover:text-white transition-all duration-300">
               <Heart onClick={addLikedRecipe} />
@@ -34,8 +34,11 @@ const RecipeDisplay = () => {
           </div>
           <img
             className="w-full rounded-lg object-cover"
-            src={clickedRecipe.image}
-            alt=""
+            src={
+              clickedRecipe.image ||
+              "https://www.landsend.com/pps/static/assets/product-detail/images/sorry_image.jpg"
+            }
+            alt={clickedRecipe.title}
           />
         </div>
 

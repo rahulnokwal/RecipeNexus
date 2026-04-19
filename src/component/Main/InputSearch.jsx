@@ -8,7 +8,6 @@ const InputSearch = () => {
   const [inputValue, setInputValue] = useState("");
   function searchRecipe() {
     const recipe = inputValue.trim();
-    console.log(recipe);
     if (recipe === "") return;
     setRecipeSearch(recipe);
     setInputValue("");
@@ -18,7 +17,7 @@ const InputSearch = () => {
     <div className="w-[calc(100%-32px)] absolute top-15 left-0 flex justify-center items-center  outline-none shadow-sm shadow-[#2E3339] bg-green-900 rounded-lg mt-4 mx-4">
       <input
         type="text"
-        placeholder="Search for Recipe"
+        placeholder="Search by Ingredients"
         className="w-full pl-4 pr-1 py-2 rounded-l-lg bg-white/80 outline-none"
         value={inputValue}
         onChange={(e) => {

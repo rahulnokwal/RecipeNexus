@@ -1,6 +1,6 @@
 import React from "react";
 import useAppContext from "../../context/useRecipeContext";
-import ErrorState from "./ErrorState";
+import ErrorState from "../ErrorPage/ErrorState";
 import { useNavigate } from "react-router-dom";
 import { HeartOff } from "lucide-react";
 const LikedDisplay = () => {
@@ -24,14 +24,14 @@ const LikedDisplay = () => {
   return (
     <>
       <p className="text-white text-2xl font-medium capitalize my-2">
-        What you will cook today?
+        What will you cook today?
       </p>
       <div className="space-y-4">
         {likedRecipe &&
           likedRecipe.map((recipe) => (
             <div
               key={recipe.id}
-              className="h-76 w-full bg-white/40  rounded-3xl my-4 overflow-hidden relative"
+              className="h-76 w-full bg-white/40  rounded-3xl my-8 overflow-hidden relative shadow-lg shadow-emerald-600"
               onClick={() => {
                 setClickedRecipe(recipe);
                 navigate("../recipe");
@@ -46,7 +46,7 @@ const LikedDisplay = () => {
                   {recipe.title}
                 </p>
                 <div
-                  className="z-50 bg-white/80 text-red-600 p-2 rounded-lg ml-auto hover:bg-red-500 hover:text-white transition-all duration-300"
+                  className="bg-white/80 text-red-600 p-2 rounded-lg ml-auto mr-2 hover:bg-red-500 hover:text-white transition-all duration-300"
                   onClick={(e) => {
                     e.stopPropagation();
                     deleteLikedRecipe(recipe.id);

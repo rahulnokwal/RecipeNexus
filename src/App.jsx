@@ -8,23 +8,31 @@ import { recipe, yt } from "../data.js";
 import { Outlet } from "react-router-dom";
 const App = () => {
   const [recipeSearch, setRecipeSearch] = useState("");
-  const [clickedRecipe, setClickedRecipe] = useState(null);
-  // const { recipeInfo, errorInfo } = useRecipeInfo(recipeSearch);
-  // const { recipeVideo, errorVideo } = useYoutubeInfo(clickedRecipe);
+
+  const [clickedRecipe, setClickedRecipe] = useState(() => {
+    const recipe = localStorage.getItem("clickedRecipe");
+    return recipe ? JSON.parse(recipe) : null;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("clickedRecipe", JSON.stringify(clickedRecipe));
+  }, [clickedRecipe]);
+
+  const { recipeInfo, errorInfo, loading } = useRecipeInfo(recipeSearch);
+  const { recipeVideo, errorVideo } = useYoutubeInfo(clickedRecipe);
 
   const [likedRecipe, setLikedRecipe] = useState(() => {
     let recipe = localStorage.getItem("likedRecipes");
     return recipe ? JSON.parse(recipe) : [];
   });
-
   useEffect(() => {
     localStorage.setItem("likedRecipes", JSON.stringify(likedRecipe));
   }, [likedRecipe]);
 
   // temperary data for UI
-  let recipeInfo = recipe;
-  let recipeVideo = yt;
-  let errorInfo, errorVideo;
+  // let recipeInfo = recipe;
+  // let recipeVideo = yt;
+  // let errorInfo, errorVideo;
 
   return (
     <ContextProvider
@@ -35,6 +43,7 @@ const App = () => {
         setClickedRecipe,
         recipeInfo,
         errorInfo,
+        loading,
         recipeVideo,
         errorVideo,
         likedRecipe,

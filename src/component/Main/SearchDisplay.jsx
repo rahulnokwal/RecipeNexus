@@ -1,18 +1,23 @@
 import React from "react";
 import useAppContext from "../../context/useRecipeContext.jsx";
-import ErrorState from "./ErrorState.jsx";
+import ErrorState from "../ErrorPage/ErrorState.jsx";
 import { useNavigate } from "react-router-dom";
+import SkeletonLoader from "../ErrorPage/SkeletonLoader.jsx";
 const SearchDisplay = () => {
   const navigate = useNavigate();
-  const { recipeSearch, recipeInfo, errorInfo, setClickedRecipe } =
+  const { recipeSearch, recipeInfo, loading, errorInfo, setClickedRecipe } =
     useAppContext();
+
+  if (loading) {
+    return <SkeletonLoader />;
+  }
 
   if (recipeSearch && errorInfo) {
     return (
       <div className="p-4 w-full h-full flex items-center justify-center">
         <ErrorState
           title="Recipe Connection Error"
-          message={errorInfo.Error}
+          message={errorInfo.message}
           onRetry={() => window.location.reload()}
         />
       </div>
