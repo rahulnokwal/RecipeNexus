@@ -7,8 +7,8 @@ const Video = () => {
     return (
       <div className="p-4 w-full h-full flex items-center justify-center">
         <ErrorState
-          title="Recipe Connection Error"
-          message={errorVideo.Error}
+          title="Recipe Video Error"
+          message={errorVideo.message}
           onRetry={() => window.location.reload()}
         />
       </div>

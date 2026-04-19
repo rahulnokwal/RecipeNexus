@@ -7,9 +7,7 @@ import SkeletonLoader from "../ErrorPage/SkeletonLoader.jsx";
 
 const HomeDisplay = () => {
   const { recipeInfo, errorInfo, loading, setClickedRecipe } = useAppContext();
-
   const navigate = useNavigate();
-
   if (errorInfo) {
     return (
       <div className="p-4 w-full h-full flex items-center justify-center">

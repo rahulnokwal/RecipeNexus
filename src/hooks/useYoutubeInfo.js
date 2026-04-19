@@ -4,7 +4,6 @@ const useYoutubeInfo = (recipe) => {
   const [recipeVideo, setRecipeVideo] = useState([]);
   const [errorVideo, setErrorVideo] = useState(null);
   useEffect(() => {
-    if (recipe == "") return;
     const fetchRecipeVideo = async () => {
       try {
         setErrorVideo(null);
@@ -12,6 +11,11 @@ const useYoutubeInfo = (recipe) => {
           `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${recipe.title}&type=video&videoDuration=medium&maxResults=1&key=${VIDEO_API_KEY}`,
         );
         const data = await response.json();
+        if (!response.ok) {
+          throw new Error(
+            data.message || "Something went wrong fetching the recipes.",
+          );
+        }
         setRecipeVideo(data.items);
       } catch (error) {
         setErrorVideo(error);

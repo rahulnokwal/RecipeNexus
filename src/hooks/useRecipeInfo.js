@@ -8,9 +8,17 @@ const useRecipeInfo = (recipe) => {
 
   useEffect(() => {
     const fetchRecipeData = async () => {
-      setErrorInfo(null);
-      setLoading(true);
       try {
+        setErrorInfo(null);
+        setLoading(true);
+
+        const cachedKey = `chche_${recipe || "random"}`;
+        const cachedData = sessionStorage.getItem(cachedKey);
+        if (cachedData) {
+          setRecipeInfo(JSON.parse(cachedData));
+          return;
+        }
+
         let fetch_url = `https://api.spoonacular.com/recipes/complexSearch?query=${recipe}&number=8&instructionsRequired=true&addRecipeInformation=true&apiKey=${RECIPE_API_KEY}`;
 
         if (recipe === "") {
@@ -25,12 +33,9 @@ const useRecipeInfo = (recipe) => {
             data.message || "Something went wrong fetching the recipes.",
           );
         }
-
-        if (recipe === "") {
-          setRecipeInfo(data.recipes);
-        } else {
-          setRecipeInfo(data.results);
-        }
+        const finalData = recipe === "" ? data.recipes : data.results;
+        setRecipeInfo(finalData);
+        sessionStorage.setItem(cachedKey, JSON.stringify(finalData));
       } catch (error) {
         setErrorInfo(error);
       } finally {

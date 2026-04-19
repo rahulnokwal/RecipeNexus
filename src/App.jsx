@@ -7,15 +7,22 @@ import Navbar from "./component/Navbar/Navbar";
 import { recipe, yt } from "../data.js";
 import { Outlet } from "react-router-dom";
 const App = () => {
-  const [recipeSearch, setRecipeSearch] = useState("");
+  const [recipeSearch, setRecipeSearch] = useState(() => {
+    const recipe = sessionStorage.getItem("recipeSearch");
+    return recipe ? recipe : "";
+  });
+
+  useEffect(() => {
+    sessionStorage.setItem("recipeSearch", recipeSearch);
+  }, [recipeSearch]);
 
   const [clickedRecipe, setClickedRecipe] = useState(() => {
-    const recipe = localStorage.getItem("clickedRecipe");
+    const recipe = sessionStorage.getItem("clickedRecipe");
     return recipe ? JSON.parse(recipe) : null;
   });
 
   useEffect(() => {
-    localStorage.setItem("clickedRecipe", JSON.stringify(clickedRecipe));
+    sessionStorage.setItem("clickedRecipe", JSON.stringify(clickedRecipe));
   }, [clickedRecipe]);
 
   const { recipeInfo, errorInfo, loading } = useRecipeInfo(recipeSearch);
@@ -29,7 +36,7 @@ const App = () => {
     localStorage.setItem("likedRecipes", JSON.stringify(likedRecipe));
   }, [likedRecipe]);
 
-  // temperary data for UI
+  // temporary data for UI
   // let recipeInfo = recipe;
   // let recipeVideo = yt;
   // let errorInfo, errorVideo;
