@@ -1,18 +1,48 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useAppContext from "../../context/useRecipeContext.jsx";
 import ErrorState from "../ErrorPage/ErrorState.jsx";
 import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
 import SkeletonLoader from "../ErrorPage/SkeletonLoader.jsx";
+import LoadingSpinner from "../ErrorPage/LoadingSpinner.jsx";
 const SearchDisplay = () => {
   const navigate = useNavigate();
-  const { recipeSearch, recipeInfo, loading, errorInfo, setClickedRecipe } =
-    useAppContext();
+  const {
+    recipeSearch,
+    recipeInfo,
+    loading,
+    errorInfo,
+    setClickedRecipe,
+    isLoadingMore,
+    loadMore,
+    hasMore,
+  } = useAppContext();
+
+  const observeEnd = useRef(null);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (
+          entries[0].isIntersecting &&
+          !isLoadingMore &&
+          recipeInfo.length > 0
+        ) {
+          loadMore();
+        }
+      },
+      { threshold: 1.0 },
+    );
+    if (observeEnd.current) observer.observe(observeEnd.current);
+    return () => {
+      if (observeEnd.current) observer.unobserve(observeEnd.current);
+    };
+  }, [observeEnd, isLoadingMore, recipeInfo.length]);
 
   if (loading) {
     return <SkeletonLoader />;
   }
 
-  if (recipeSearch && errorInfo) {
+  if (recipeSearch && !recipeInfo && errorInfo) {
     return (
       <div className="p-4 w-full h-full flex items-center justify-center">
         <ErrorState
@@ -64,6 +94,19 @@ const SearchDisplay = () => {
           </div>
         ))}
       </div>
+      {
+        <div
+          ref={observeEnd}
+          className="h-10 w-full flex flex-col justify-center items-center mt-4"
+        >
+          {isLoadingMore && <LoadingSpinner />}
+          {!hasMore && (
+            <p className="text-white text-sm font-medium">
+              You've reached the end of the recipes!
+            </p>
+          )}
+        </div>
+      }
     </>
   );
 };
