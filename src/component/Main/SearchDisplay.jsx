@@ -42,7 +42,7 @@ const SearchDisplay = () => {
     return <SkeletonLoader />;
   }
 
-  if (recipeSearch && !recipeInfo && errorInfo) {
+  if (recipeSearch && errorInfo) {
     return (
       <div className="p-4 w-full h-full flex items-center justify-center">
         <ErrorState
