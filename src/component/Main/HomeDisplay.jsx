@@ -40,8 +40,9 @@ const HomeDisplay = () => {
         >
           <img
             src={
-              recipe.image ||
-              "https://www.landsend.com/phttps://images.unsplash.com/photo-1531928351158-2f736078e0a1?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZW1wdHklMjBwbGF0ZXxlbnwwfHwwfHx8MA%3D%3Dps/static/assets/product-detail/images/sorry_image.jpg"
+              recipe.imageType === ""
+                ? "https://www.landsend.com/phttps://images.unsplash.com/photo-1531928351158-2f736078e0a1?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZW1wdHklMjBwbGF0ZXxlbnwwfHwwfHx8MA%3D%3Dps/static/assets/product-detail/images/sorry_image.jpg"
+                : recipe.image
             }
             className="h-full w-1/2 rounded-lg"
           />
