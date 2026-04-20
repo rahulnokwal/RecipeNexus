@@ -42,7 +42,7 @@ const HomeDisplay = () => {
           <Title
             recipe={recipe}
             containerClass="w-1/2"
-            titleClass="text-white line-clamp-3"
+            titleClass="text-white text-xl line-clamp-3"
             statsClass="mt-auto"
           />
         </div>

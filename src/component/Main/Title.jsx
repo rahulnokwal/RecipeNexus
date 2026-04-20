@@ -8,7 +8,7 @@ const Title = ({
 }) => {
   return (
     <div className={`flex flex-col  px-2 ${containerClass}`}>
-      <h1 className={`text-center font-bold ${titleClass}`}>{recipe.title}</h1>
+      <h1 className={`font-bold ${titleClass}`}>{recipe.title}</h1>
 
       <div className={`flex justify-center gap-4 ${statsClass}`}>
         <div className="flex items-center gap-2">

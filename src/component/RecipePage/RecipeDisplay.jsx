@@ -16,7 +16,7 @@ const RecipeDisplay = () => {
         <div className="absolute top-3/5  rounded-3xl bg-linear-to-b from-white/10 from-0% to-5% to-white/90 op-blur-xs pt-15">
           <Title
             recipe={clickedRecipe}
-            titleClass="text-2xl text-black"
+            titleClass="text-2xl text-black text-center"
             statsClass="my-4 text-[#C53030]"
           />
           <RecipeDisplayInfo />

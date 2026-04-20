@@ -52,7 +52,7 @@ const App = () => {
         setLikedRecipe,
       }}
     >
-      <div className="w-screen h-screen bg-slate-800 flex justify-center py-2">
+      <div className="w-screen h-dvh  bg-[#121417] sm:bg-slate-800 flex justify-center sm:py-2">
         <div className="w-sm h-full rounded-lg  relative bg-[#121417]">
           <Header />
           <Outlet />
