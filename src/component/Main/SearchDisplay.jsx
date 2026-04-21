@@ -1,12 +1,42 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useAppContext from "../../context/useRecipeContext.jsx";
 import ErrorState from "../ErrorPage/ErrorState.jsx";
 import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
 import SkeletonLoader from "../ErrorPage/SkeletonLoader.jsx";
+import LoadingSpinner from "../ErrorPage/LoadingSpinner.jsx";
 const SearchDisplay = () => {
   const navigate = useNavigate();
-  const { recipeSearch, recipeInfo, loading, errorInfo, setClickedRecipe } =
-    useAppContext();
+  const {
+    recipeSearch,
+    recipeInfo,
+    loading,
+    errorInfo,
+    setClickedRecipe,
+    isLoadingMore,
+    loadMore,
+    hasMore,
+  } = useAppContext();
+
+  const observeEnd = useRef(null);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (
+          entries[0].isIntersecting &&
+          !isLoadingMore &&
+          recipeInfo.length > 0
+        ) {
+          loadMore();
+        }
+      },
+      { threshold: 1.0 },
+    );
+    if (observeEnd.current) observer.observe(observeEnd.current);
+    return () => {
+      if (observeEnd.current) observer.unobserve(observeEnd.current);
+    };
+  }, [observeEnd, isLoadingMore, recipeInfo.length]);
 
   if (loading) {
     return <SkeletonLoader />;
@@ -38,17 +68,24 @@ const SearchDisplay = () => {
       <p className="text-white text-2xl font-medium capitalize my-2">
         Your recipe with {recipeSearch}
       </p>
-      <div className="flex flex-wrap gap-2.5 justify-center">
+      <div className="grid grid-cols-2 gap-2 justify-center">
         {recipeInfo.map((recipe) => (
           <div
             key={recipe.id}
-            className="h-42 w-40 rounded-lg"
+            className="h-44 rounded-lg"
             onClick={() => {
               setClickedRecipe(recipe);
               navigate("../recipe");
             }}
           >
-            <img src={recipe.image} className="h-full w-full rounded-lg" />
+            <img
+              src={
+                recipe.imageType === ""
+                  ? "https://images.unsplash.com/photo-1604491928425-86c35b1d1649?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cGxhdGV8ZW58MHx8MHx8fDA%3D"
+                  : recipe.image
+              }
+              className="h-full w-full rounded-lg object-cover"
+            />
             <div className="bg-white/40 h-full w-full rounded-lg -translate-y-full flex items-center justify-center backdrop-blur-xs px-2">
               <p className="text-center font-semibold text-black">
                 {recipe.title}
@@ -57,6 +94,19 @@ const SearchDisplay = () => {
           </div>
         ))}
       </div>
+      {
+        <div
+          ref={observeEnd}
+          className="h-10 w-full flex flex-col justify-center items-center mt-4"
+        >
+          {isLoadingMore && <LoadingSpinner />}
+          {!hasMore && (
+            <p className="text-white text-sm font-medium">
+              You've reached the end of the recipes!
+            </p>
+          )}
+        </div>
+      }
     </>
   );
 };

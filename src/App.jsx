@@ -25,7 +25,8 @@ const App = () => {
     sessionStorage.setItem("clickedRecipe", JSON.stringify(clickedRecipe));
   }, [clickedRecipe]);
 
-  const { recipeInfo, errorInfo, loading } = useRecipeInfo(recipeSearch);
+  const { recipeInfo, errorInfo, loading, isLoadingMore, loadMore, hasMore } =
+    useRecipeInfo(recipeSearch);
   const { recipeVideo, errorVideo } = useYoutubeInfo(clickedRecipe);
 
   const [likedRecipe, setLikedRecipe] = useState(() => {
@@ -50,9 +51,12 @@ const App = () => {
         errorVideo,
         likedRecipe,
         setLikedRecipe,
+        isLoadingMore,
+        loadMore,
+        hasMore,
       }}
     >
-      <div className="w-screen h-screen bg-slate-800 flex justify-center py-2">
+      <div className="w-screen h-dvh  bg-[#121417] sm:bg-slate-800 flex justify-center sm:py-2">
         <div className="w-sm h-full rounded-lg  relative bg-[#121417]">
           <Header />
           <Outlet />

@@ -11,6 +11,10 @@ export const appContext = createContext({
   errorVideo: {},
   likedRecipe: [],
   setLikedRecipe: () => {},
+  loading: false,
+  isLoadingMore: false,
+  loadMore: () => {},
+  hasMore: true,
 });
 export const ContextProvider = appContext.Provider;
 const useAppContext = () => {

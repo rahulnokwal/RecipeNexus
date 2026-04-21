@@ -45,8 +45,9 @@ const RecipeDisplayHeader = () => {
       <img
         className="w-full rounded-lg object-cover"
         src={
-          clickedRecipe.image ||
-          "https://www.landsend.com/pps/static/assets/product-detail/images/sorry_image.jpg"
+          clickedRecipe.imageType === ""
+            ? "https://images.unsplash.com/photo-1604491928425-86c35b1d1649?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cGxhdGV8ZW58MHx8MHx8fDA%3D"
+            : clickedRecipe.image
         }
         alt={clickedRecipe.title}
       />

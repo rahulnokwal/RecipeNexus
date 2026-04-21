@@ -26,6 +26,11 @@ const Video = () => {
           allowFullScreen
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         ></iframe>
+        <p className="text-xs my-2">
+          <span className="text-red-600"> Note:</span> Video results are based
+          on a keyword search of the recipe's name and title. Occasional
+          non-recipe videos may appear.
+        </p>
       </div>
     )
   );
