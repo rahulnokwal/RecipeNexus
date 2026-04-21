@@ -13,13 +13,13 @@ const Title = ({
       <div className={`flex justify-center gap-4 ${statsClass}`}>
         <div className="flex items-center gap-2">
           <Clock />
-          <p className="text-center">
+          <p className="text-center text-[14px]">
             {recipe.readyInMinutes} <span>min</span>
           </p>
         </div>
         <div className="flex items-center justify-evenly gap-2">
           <CookingPot />
-          <p className="text-center">
+          <p className="text-center text-[14px]">
             {recipe.servings} <span>serve</span>
           </p>
         </div>

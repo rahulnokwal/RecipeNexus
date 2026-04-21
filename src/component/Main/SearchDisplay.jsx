@@ -81,7 +81,7 @@ const SearchDisplay = () => {
             <img
               src={
                 recipe.imageType === ""
-                  ? "https://www.landsend.com/phttps://images.unsplash.com/photo-1531928351158-2f736078e0a1?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZW1wdHklMjBwbGF0ZXxlbnwwfHwwfHx8MA%3D%3Dps/static/assets/product-detail/images/sorry_image.jpg"
+                  ? "https://images.unsplash.com/photo-1604491928425-86c35b1d1649?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cGxhdGV8ZW58MHx8MHx8fDA%3D"
                   : recipe.image
               }
               className="h-full w-full rounded-lg object-cover"
